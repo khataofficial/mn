@@ -803,7 +803,7 @@
   function saveSetup() {
     if (!appUrl()) { alert('Open My Khata from its web address (https://...) first, then download the setup.'); return; }
     const b = new Blob([setupScript()], { type: 'application/octet-stream' }), l = document.createElement('a');
-    l.href = URL.createObjectURL(b); l.download = 'khata-app-ai-setup.bat'; document.body.appendChild(l); l.click(); l.remove();
+    l.href = URL.createObjectURL(b); l.download = 'mykhata.bat'; document.body.appendChild(l); l.click(); l.remove();
     setTimeout(() => URL.revokeObjectURL(l.href), 5000);
   }
   function setupCmds() {                         // Mac / Linux: ONE command that does everything
