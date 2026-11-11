@@ -1,0 +1,368 @@
+[
+ {
+  "type": "function",
+  "function": {
+   "name": "get_summary",
+   "description": "Overall numbers: total udhaar owed by customers, customers count, defaulters, cash on hand, capital, expenses, stock value.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_customers",
+   "description": "List customers with balance. Use filter and sort to answer questions like \"who owes the most\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "filter": {
+      "type": "string",
+      "enum": [
+       "all",
+       "owing",
+       "defaulters",
+       "cleared"
+      ],
+      "description": "which customers"
+     },
+     "sort": {
+      "type": "string",
+      "enum": [
+       "balance_desc",
+       "balance_asc",
+       "name",
+       "recent"
+      ],
+      "description": "sort order"
+     },
+     "limit": {
+      "type": "number",
+      "description": "max rows, default 10"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_customer",
+   "description": "Full details of one customer: balance and recent entries (sales and payments).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "customer name"
+     }
+    },
+    "required": [
+     "name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_sales_report",
+   "description": "Sales (udhaar given) and payments received for a period. Use for questions like today sales, this week, this month, best selling items, top buyers.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "period": {
+      "type": "string",
+      "enum": [
+       "today",
+       "week",
+       "month",
+       "all"
+      ],
+      "description": "time range, default week"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_stock",
+   "description": "List stock products with quantity, cost and sell rate. Use filter low for items to restock, dead for items not sold for 30+ days.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "filter": {
+      "type": "string",
+      "enum": [
+       "all",
+       "low",
+       "dead"
+      ],
+      "description": "which products"
+     },
+     "limit": {
+      "type": "number",
+      "description": "max rows, default 15"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_product",
+   "description": "Details of one product in stock.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "product name"
+     }
+    },
+    "required": [
+     "name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_bills",
+   "description": "Rent and bills with due dates and amounts.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_expenses",
+   "description": "Recent expenses (personal and business).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "enum": [
+       "all",
+       "personal",
+       "business"
+      ],
+      "description": "category"
+     },
+     "limit": {
+      "type": "number",
+      "description": "max rows, default 10"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "remember",
+   "description": "Save one short fact to long-term memory, ONLY when the user clearly asks you to remember something (e.g. a customer nickname, a shop rule, a preference). Never use it for anything else.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "note": {
+      "type": "string",
+      "description": "the fact, short, max 150 characters"
+     }
+    },
+    "required": [
+     "note"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "forget",
+   "description": "Remove a remembered note, ONLY when the user asks you to forget it. Give a few words of the note.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "note": {
+      "type": "string",
+      "description": "words from the note to forget"
+     }
+    },
+    "required": [
+     "note"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_customer",
+   "description": "Create a new customer account. Phone is optional.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "phone": {
+      "type": "string",
+      "description": "optional"
+     }
+    },
+    "required": [
+     "name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_sale",
+   "description": "Write a credit sale (udhaar) in a customer account. Quantity and rate are numbers.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "customer": {
+      "type": "string"
+     },
+     "item": {
+      "type": "string"
+     },
+     "qty": {
+      "type": "number"
+     },
+     "rate": {
+      "type": "number",
+      "description": "price per unit"
+     }
+    },
+    "required": [
+     "customer",
+     "item",
+     "qty",
+     "rate"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_payment",
+   "description": "Record a payment received from a customer.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "customer": {
+      "type": "string"
+     },
+     "amount": {
+      "type": "number"
+     }
+    },
+    "required": [
+     "customer",
+     "amount"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_stock",
+   "description": "Buy stock: add quantity to a product (creates the product if new).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "product": {
+      "type": "string"
+     },
+     "qty": {
+      "type": "number"
+     },
+     "cost_rate": {
+      "type": "number",
+      "description": "cost price per unit"
+     }
+    },
+    "required": [
+     "product",
+     "qty",
+     "cost_rate"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_capital",
+   "description": "Add capital / investment money into the shop (Finance > Add Capital). Use for \"add capital 2000\", \"capital dala\", \"paisa lagaya\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "amount": {
+      "type": "number"
+     },
+     "note": {
+      "type": "string",
+      "description": "optional"
+     }
+    },
+    "required": [
+     "amount"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_expense",
+   "description": "Write an expense in Finance.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "enum": [
+       "personal",
+       "business"
+      ]
+     },
+     "label": {
+      "type": "string"
+     },
+     "amount": {
+      "type": "number"
+     }
+    },
+    "required": [
+     "category",
+     "label",
+     "amount"
+    ]
+   }
+  }
+ }
+]
